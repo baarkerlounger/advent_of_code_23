@@ -1,0 +1,11 @@
+[tasks.day]
+script = '''
+cargo new day${@}
+mkdir day${@}/data
+touch day${@}/data/demo_input.txt
+touch day${@}/data/demo_input_2.txt
+touch day${@}/data/input.txt
+touch day${@}/README.md
+rm day${@}/src/main.rs
+cp main_template.rs day${@}/src/main.rs
+'''

@@ -2,6 +2,8 @@
 
 Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.rust-lang.org/).
 
+Generate project: `cargo make day {##}`
+
 <!--- advent_readme_stars table --->
 ## 2023 Results
 
@@ -22,6 +24,6 @@ Solutions for [Advent of Code](https://adventofcode.com/) in [Rust](https://www.
 
 Benchmarks run using:
  ```bash
- hyperfine --runs 100  -N  "target/release/day{n} 1"
- hyperfine --runs 100  -N  "target/release/day{n} 2"
+ hyperfine --runs 100  -N  "target/release/day{##} 1"
+ hyperfine --runs 100  -N  "target/release/day{##} 2"
  ```
