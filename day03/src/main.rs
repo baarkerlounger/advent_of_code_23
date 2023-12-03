@@ -67,18 +67,12 @@ fn result(input: &str, part: Part) -> u32 {
                     let match_idx = mat.0;
 
                     if row_num > 0 {
-                        gear_ratio_parts.append(&mut adjacent_nums(
-                            row_num - 1,
-                            &nums_map,
-                            match_idx,
-                        ));
+                        let mut adjacent_above = adjacent_nums(row_num - 1, &nums_map, match_idx);
+                        gear_ratio_parts.append(&mut adjacent_above);
                     }
                     if row_num < (grid.len() - 1) {
-                        gear_ratio_parts.append(&mut adjacent_nums(
-                            row_num + 1,
-                            &nums_map,
-                            match_idx,
-                        ));
+                        let mut adjacent_below = adjacent_nums(row_num + 1, &nums_map, match_idx);
+                        gear_ratio_parts.append(&mut adjacent_below);
                     }
                     gear_ratio_parts.append(&mut adjacent_nums(row_num, &nums_map, match_idx));
 
