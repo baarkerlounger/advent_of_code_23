@@ -49,7 +49,7 @@ mod tests {
 
     // #[test]
     // fn test_part_2() {
-    //     let file_contents = fs::read_to_string("data/demo_input_2.txt").expect("valid file");
+    //     let file_contents = fs::read_to_string("data/demo_input.txt").expect("valid file");
     //     assert_eq!(result(&file_contents, Part::Two), 2);
     // }
 }

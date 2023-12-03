@@ -1,11 +1,15 @@
 ```bash
-Benchmark 1: target/release/day2 1
+$ hyperfine --runs 100  -N  "target/release/day02 1"
+
+Benchmark 1: target/release/day02 1
   Time (mean ± σ):       1.5 ms ±   0.9 ms    [User: 0.9 ms, System: 0.3 ms]
   Range (min … max):     0.8 ms …   4.6 ms    100 runs
 ```
 
 ```bash
-Benchmark 1: target/release/day2 2
+$ hyperfine --runs 100  -N  "target/release/day02 1"
+
+Benchmark 1: target/release/day02 2
   Time (mean ± σ):       1.4 ms ±   0.8 ms    [User: 0.9 ms, System: 0.4 ms]
   Range (min … max):     0.9 ms …   4.0 ms    100 runs
 ```
