@@ -1,17 +1,17 @@
 ```bash
-$ hyperfine --runs 100  -N  "target/release/day01 1"
+$ hyperfine --warmup 50 --runs 100  -N  "target/release/day01 1"
 
 Benchmark 1: target/release/day01 1
-  Time (mean ± σ):       1.5 ms ±   1.0 ms    [User: 0.8 ms, System: 0.5 ms]
-  Range (min … max):     0.8 ms …   4.6 ms    100 runs
+  Time (mean ± σ):       1.1 ms ±   0.2 ms    [User: 0.8 ms, System: 0.1 ms]
+  Range (min … max):     0.7 ms …   1.7 ms    100 runs
 ```
 
 ```bash
-$ hyperfine --runs 100  -N  "target/release/day01 2"
+$ hyperfine --warmup 50 --runs 100  -N  "target/release/day01 2"
 
 Benchmark 1: target/release/day01 2
-  Time (mean ± σ):       1.4 ms ±   0.2 ms    [User: 1.0 ms, System: 0.2 ms]
-  Range (min … max):     1.1 ms …   2.1 ms    100 runs
+  Time (mean ± σ):       1.8 ms ±   0.5 ms    [User: 1.3 ms, System: 0.4 ms]
+  Range (min … max):     1.1 ms …   2.8 ms    100 runs
 ```
 
 

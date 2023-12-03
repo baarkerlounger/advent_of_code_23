@@ -1,17 +1,18 @@
 ```bash
-$ hyperfine --runs 100  -N  "target/release/day03 1"
+$ hyperfine --warmup 50 --runs 100  -N  "target/release/day03 1"
 
 Benchmark 1: target/release/day03 1
-  Time (mean ± σ):       3.0 ms ±   1.5 ms    [User: 2.2 ms, System: 0.6 ms]
-  Range (min … max):     2.2 ms …  10.2 ms    100 runs
+  Time (mean ± σ):       2.5 ms ±   0.2 ms    [User: 1.8 ms, System: 0.6 ms]
+  Range (min … max):     2.2 ms …   3.3 ms    100 runs
+
 ```
 
 ```bash
-$ hyperfine --runs 100  -N  "target/release/day03 1"
+$ hyperfine --warmup 50 --runs 100  -N  "target/release/day03 2"
 
 Benchmark 1: target/release/day03 2
-  Time (mean ± σ):       2.0 ms ±   1.0 ms    [User: 1.3 ms, System: 0.5 ms]
-  Range (min … max):     1.3 ms …   6.0 ms    100 runs
+  Time (mean ± σ):       2.0 ms ±   0.7 ms    [User: 1.4 ms, System: 0.4 ms]
+  Range (min … max):     1.3 ms …   3.4 ms    100 runs
 ```
 
 --- Day 3: Gear Ratios ---
