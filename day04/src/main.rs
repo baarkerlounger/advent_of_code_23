@@ -1,6 +1,5 @@
 use std::env;
 use std::fs;
-use std::collections::HashMap;
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -32,40 +31,33 @@ fn result(input: &str, part: Part) -> u32 {
                 let mut winning: Vec<u32> = nums[0].split_whitespace().map(|s| s.parse().unwrap()).collect();
                 let actual: Vec<u32> = nums[1].split_whitespace().map(|s| s.parse().unwrap()).collect();
                 winning.retain(|&n| actual.contains(&n));
-                let count = winning.len();
+                let count = winning.len() as u32;
                 if count > 1 {
-                    2_u32.pow((count - 1) as u32)
+                    2_u32.pow(count - 1)
                 } else {
-                    count as u32
+                    count
                 }
             }).sum()
         }
         Part::Two => {
             let lines = input.lines();
-            let mut map: HashMap<usize, u32> = HashMap::new();
+            let mut copies_list: Vec<u32> = vec![1; lines.clone().count()];
             for (line_num, line) in lines.enumerate() {
                 let nums: Vec<&str> = line.split(": ").collect::<Vec<_>>()[1].split(" | ").collect();
                 let mut winning: Vec<u32> = nums[0].split_whitespace().map(|s| s.parse().unwrap()).collect();
                 let actual: Vec<u32> = nums[1].split_whitespace().map(|s| s.parse().unwrap()).collect();
                 winning.retain(|&n| actual.contains(&n));
                 let original_score = winning.len();
-                let card_num = line_num + 1;
-                let self_copies = if map.contains_key(&card_num) {
-                    *map.get(&card_num).unwrap()
-                } else {
-                    map.insert(card_num, 1);
-                    1
-                };
-                for _ in 1..=self_copies {
-                    if original_score > 0 {
-                        for card in (card_num + 1)..=(card_num + original_score) {
-                            let copies = map.get(&card).unwrap_or(&1) + 1;
-                            map.insert(card, copies);
+                let self_copies = copies_list[line_num];
+                if original_score > 0 {
+                    for _ in 1..=self_copies {
+                        for card in (line_num + 1)..=(line_num + original_score) {
+                            copies_list[card] = copies_list[card] + 1;
                         }
                     }
                 }
             }
-            map.values().sum()
+            copies_list.iter().sum()
         }
     }
 }
