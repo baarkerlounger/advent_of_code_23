@@ -11,7 +11,8 @@ Generate project: `cargo make day {##}`
 | :---: | :---: | :---: |
 | [Day 1](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ |
 | [Day 2](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ |
-| [Day 2](https://adventofcode.com/2023/day/3) | ⭐ | ⭐ |
+| [Day 3](https://adventofcode.com/2023/day/3) | ⭐ | ⭐ |
+| [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 <!--- benchmarking table --->
@@ -22,8 +23,9 @@ Generate project: `cargo make day {##}`
 | [Day 1](./day01/src/main.rs) | `1.1ms` | `1.8ms` | Aho-corasick |
 | [Day 2](./day02/src/main.rs) | `1.4ms` | `1.0ms` ||
 | [Day 3](./day03/src/main.rs) | `2.5ms` | `2.0ms` ||
+| [Day 4](./day04/src/main.rs) | `2.0ms` | `272.2ms` ||
 
-**Total: 9.8ms**
+**Total: 284ms**
 <!--- benchmarking table --->
 
 Benchmarks run on `Intel i7-10510U` using:

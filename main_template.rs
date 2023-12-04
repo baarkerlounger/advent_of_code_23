@@ -24,7 +24,7 @@ enum Part {
 }
 
 fn result(input: &str, part: Part) -> u32 {
-    let lines = input.trim().split("\n");
+    let lines = input.lines();
 
     match part {
         Part::One => {
