@@ -25,46 +25,46 @@ enum Part {
 
 fn result(input: &str, part: Part) -> u64 {
     let lines = match part {
-        Part::One => {
-            input.lines()
-                .map(|l| {
-                    l.split(":")
-                        .map(|s| s.trim())
-                        .nth(1)
-                        .unwrap()
-                        .split_whitespace()
-                        .map(|s| s.parse::<u64>().unwrap())
-                        .collect::<Vec<u64>>()
-                })
-                .collect::<Vec<Vec<u64>>>()
-        }
-        Part::Two => {
-            input.lines()
-                .map(|l| {
-                    Vec::from([l.split(":")
-                        .map(|s| s.trim())
-                        .nth(1)
-                        .unwrap()
-                        .replace(" ", "")
-                        .parse::<u64>().unwrap()])
-                })
-                .collect::<Vec<Vec<u64>>>()
-        }
+        Part::One => input
+            .lines()
+            .map(|l| {
+                l.split(":")
+                    .map(|s| s.trim())
+                    .nth(1)
+                    .unwrap()
+                    .split_whitespace()
+                    .map(|s| s.parse::<u64>().unwrap())
+                    .collect::<Vec<u64>>()
+            })
+            .collect::<Vec<Vec<u64>>>(),
+        Part::Two => input
+            .lines()
+            .map(|l| {
+                Vec::from([l
+                    .split(":")
+                    .map(|s| s.trim())
+                    .nth(1)
+                    .unwrap()
+                    .replace(" ", "")
+                    .parse::<u64>()
+                    .unwrap()])
+            })
+            .collect::<Vec<Vec<u64>>>(),
     };
 
     let times = &lines[0];
     let dists = &lines[1];
 
-    let total_win_strats: u64 = times.iter().enumerate().map(|(idx, time)| {
-        let dist = dists[idx];
-        let mut win_strats = 0;
-        for hold in 0 as u64..=*time {
-            if (hold * (time - hold)) > dist {
-                win_strats += 1;
-            }
-        }
-        win_strats
-    }).product();
+    let total_win_strats: u64 = times
+        .iter()
+        .enumerate()
+        .map(|(idx, time)| {
+            let dist = dists[idx];
+            (0 as u64..=*time)
+                .map(|hold| ((hold * (time - hold)) > dist) as u64)
+                .sum::<u64>()
+        })
+        .product();
 
     total_win_strats
 }

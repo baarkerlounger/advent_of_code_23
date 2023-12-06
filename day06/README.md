@@ -10,8 +10,8 @@ Benchmark 1: target/release/day06 1
 $ hyperfine --warmup 50 --runs 100  -N  "target/release/day06 2"
 
 Benchmark 1: target/release/day06 2
-  Time (mean ± σ):      88.2 ms ±   2.4 ms    [User: 87.4 ms, System: 0.6 ms]
-  Range (min … max):    86.1 ms … 100.8 ms    100 runs
+  Time (mean ± σ):      29.1 ms ±   2.3 ms    [User: 28.4 ms, System: 0.5 ms]
+  Range (min … max):    27.8 ms …  36.0 ms    100 runs
 ```
 
 --- Day 6: Wait For It ---
