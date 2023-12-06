@@ -2,16 +2,16 @@
 $ hyperfine --warmup 50 --runs 100  -N  "target/release/day04 1"
 
 Benchmark 1: target/release/day04 1
-  Time (mean ± σ):       1.7 ms ±   0.5 ms    [User: 1.2 ms, System: 0.3 ms]
-  Range (min … max):     1.1 ms …   3.0 ms    100 runs
+  Time (mean ± σ):       1.2 ms ±   0.1 ms    [User: 0.9 ms, System: 0.1 ms]
+  Range (min … max):     1.0 ms …   1.5 ms    100 runs
 ```
 
 ```bash
 $ hyperfine --warmup 50 --runs 100  -N  "target/release/day04 2"
 
 Benchmark 1: target/release/day04 2
-  Time (mean ± σ):       2.0 ms ±   0.6 ms    [User: 1.3 ms, System: 0.4 ms]
-  Range (min … max):     1.1 ms …   4.0 ms    100 runs
+  Time (mean ± σ):       1.2 ms ±   0.1 ms    [User: 0.9 ms, System: 0.1 ms]
+  Range (min … max):     1.0 ms …   1.5 ms    100 runs
 ```
 
 --- Day 4: Scratchcards ---

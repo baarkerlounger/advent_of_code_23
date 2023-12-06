@@ -1,6 +1,6 @@
+use std::collections::{HashMap, HashSet};
 use std::env;
 use std::fs;
-use std::collections::{HashMap, HashSet};
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -25,61 +25,51 @@ enum Part {
 }
 
 fn result(input: &str, part: Part) -> u32 {
-    let lines = input.trim().split("\n");
+    let lines = input.lines();
 
     match part {
         Part::One => {
-            let bag = HashMap::from([
-                ("red", 12),
-                ("green", 13),
-                ("blue", 14),
-            ]);
+            let bag = HashMap::from([("red", 12), ("green", 13), ("blue", 14)]);
             let mut possible = HashSet::new();
 
             for line in lines {
-                let split = line.split(":").collect::<Vec<&str>>();
-                let id = split[0]
-                    .split_whitespace()
-                    .collect::<Vec<&str>>()[1]
+                let split = line.split(':').collect::<Vec<&str>>();
+                let id = split[0].split_whitespace().collect::<Vec<&str>>()[1]
                     .parse::<u32>()
                     .unwrap();
                 possible.insert(id);
 
-                let rounds: Vec<&str> = split[1].split(";").collect();
+                let rounds: Vec<&str> = split[1].split(';').collect();
                 for round in rounds {
                     let die: Vec<&str> = round.split(", ").collect();
                     for dice in die {
                         let dice_split: Vec<&str> = dice.split_whitespace().collect();
                         let actual = dice_split[0].parse::<u32>().unwrap();
                         let max = bag.get(dice_split[1]).unwrap();
-                        if  actual > *max {
+                        if actual > *max {
                             possible.remove(&id);
                         }
                     }
                 }
             }
             possible.iter().sum()
-        },
+        }
         Part::Two => {
             let mut powers: Vec<u32> = Vec::new();
 
             for line in lines {
-                let mut bag = HashMap::from([
-                    ("red", 0),
-                    ("green", 0),
-                    ("blue", 0),
-                ]);
+                let mut bag = HashMap::from([("red", 0), ("green", 0), ("blue", 0)]);
 
-                let split = line.split(":").collect::<Vec<&str>>();
+                let split = line.split(':').collect::<Vec<&str>>();
 
-                let rounds: Vec<&str> = split[1].split(";").collect();
+                let rounds: Vec<&str> = split[1].split(';').collect();
                 for round in rounds {
                     let die: Vec<&str> = round.split(", ").collect();
                     for dice in die {
                         let dice_split: Vec<&str> = dice.split_whitespace().collect();
                         let actual = dice_split[0].parse::<u32>().unwrap();
                         let max = bag.get_mut(dice_split[1]).unwrap();
-                        if  actual > *max {
+                        if actual > *max {
                             *max = actual;
                         }
                     }

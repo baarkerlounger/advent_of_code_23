@@ -22,12 +22,12 @@ Generate project: `cargo make day {##}`
 
 | Day | Part 1 | Part 2 | Notes |
 | :---: | :---: | :---:  | :---: |
-| [Day 1](./day01/src/main.rs) | `1.1ms` | `1.8ms` | Aho-corasick |
-| [Day 2](./day02/src/main.rs) | `1.4ms` | `1.0ms` ||
-| [Day 3](./day03/src/main.rs) | `2.5ms` | `2.0ms` ||
-| [Day 4](./day04/src/main.rs) | `1.7ms` | `2.0ms` ||
+| [Day 1](./day01/src/main.rs) | `0.9ms` | `1.3ms` | Aho-corasick |
+| [Day 2](./day02/src/main.rs) | `1.2ms` | `1.0ms` ||
+| [Day 3](./day03/src/main.rs) | `2.4ms` | `1.5ms` ||
+| [Day 4](./day04/src/main.rs) | `1.2ms` | `1.2ms` ||
 | [Day 5](./day05/src/main.rs) | `0.8ms` | `57259ms` |Rayon to brute force|
-| [Day 6](./day06/src/main.rs) | `0.7ms` | `29.1ms` ||
+| [Day 6](./day06/src/main.rs) | `0.7ms` | `28.5ms` ||
 
 <!--- benchmarking table --->
 

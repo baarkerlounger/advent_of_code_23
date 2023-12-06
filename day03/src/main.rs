@@ -62,7 +62,7 @@ fn result(input: &str, part: Part) -> u32 {
             }
 
             for (row_num, row) in grid.iter().enumerate() {
-                for mat in row.match_indices("*") {
+                for mat in row.match_indices('*') {
                     let mut gear_ratio_parts: Vec<u32> = Vec::new();
                     let match_idx = mat.0;
 
@@ -89,7 +89,7 @@ fn result(input: &str, part: Part) -> u32 {
 fn substring_contains_symbols(row: &str, start: usize, end: usize) -> bool {
     let symbols = Vec::from(['*', '#', '$', '+', '-', '/', '=', '@', '%', '&']);
     let adjacent_chars = &row.chars().collect::<Vec<_>>()[start..end];
-    adjacent_chars.iter().any(|c| symbols.contains(&c))
+    adjacent_chars.iter().any(|c| symbols.contains(c))
 }
 
 fn adjacent_nums(

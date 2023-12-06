@@ -25,13 +25,16 @@ enum Part {
 }
 
 fn result(input: &str, part: Part) -> u32 {
-    let lines = input.trim().split("\n");
+    let lines = input.lines();
 
     match part {
         Part::One => {
             let sum = lines
                 .map(|l| {
-                    let digits = l.chars().filter(|c| c.is_digit(10)).collect::<Vec<char>>();
+                    let digits = l
+                        .chars()
+                        .filter(|c| c.is_ascii_digit())
+                        .collect::<Vec<char>>();
                     let first = digits[0];
                     let last = digits[digits.len() - 1];
                     format!("{}{}", first, last).parse::<u32>().unwrap()

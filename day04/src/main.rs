@@ -1,6 +1,6 @@
+use std::collections::HashSet;
 use std::env;
 use std::fs;
-use std::collections::HashSet;
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -26,31 +26,49 @@ enum Part {
 
 fn result(input: &str, part: Part) -> u32 {
     match part {
-        Part::One => {
-            input.lines().map(|line| {
-                let nums: Vec<&str> = line.split(": ").collect::<Vec<_>>()[1].split(" | ").collect();
-                let winning: HashSet<u32> = nums[0].split_whitespace().map(|s| s.parse().unwrap()).collect();
-                let actual: HashSet<u32> = nums[1].split_whitespace().map(|s| s.parse().unwrap()).collect();
+        Part::One => input
+            .lines()
+            .map(|line| {
+                let nums: Vec<&str> = line.split(": ").collect::<Vec<_>>()[1]
+                    .split(" | ")
+                    .collect();
+                let winning: HashSet<u32> = nums[0]
+                    .split_whitespace()
+                    .map(|s| s.parse().unwrap())
+                    .collect();
+                let actual: HashSet<u32> = nums[1]
+                    .split_whitespace()
+                    .map(|s| s.parse().unwrap())
+                    .collect();
                 let count = winning.intersection(&actual).count() as u32;
                 if count > 1 {
                     2_u32.pow(count - 1)
                 } else {
                     count
                 }
-            }).sum()
-        }
+            })
+            .sum(),
         Part::Two => {
             let lines = input.lines();
             let mut copies_list: Vec<u32> = vec![1; lines.clone().count()];
             for (line_num, line) in lines.enumerate() {
-                let nums: Vec<&str> = line.split(": ").collect::<Vec<_>>()[1].split(" | ").collect();
-                let winning: HashSet<u32> = nums[0].split_whitespace().map(|s| s.parse().unwrap()).collect();
-                let actual: HashSet<u32> = nums[1].split_whitespace().map(|s| s.parse().unwrap()).collect();
+                let nums: Vec<&str> = line.split(": ").collect::<Vec<_>>()[1]
+                    .split(" | ")
+                    .collect();
+                let winning: HashSet<u32> = nums[0]
+                    .split_whitespace()
+                    .map(|s| s.parse().unwrap())
+                    .collect();
+                let actual: HashSet<u32> = nums[1]
+                    .split_whitespace()
+                    .map(|s| s.parse().unwrap())
+                    .collect();
                 let original_score = winning.intersection(&actual).count();
                 let self_copies = copies_list[line_num];
                 if original_score > 0 {
+                    #[allow(clippy::needless_range_loop)]
                     for card in (line_num + 1)..=(line_num + original_score) {
-                        copies_list[card] = copies_list[card] + self_copies;
+                        copies_list[card] += self_copies;
                     }
                 }
             }
@@ -58,7 +76,6 @@ fn result(input: &str, part: Part) -> u32 {
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {

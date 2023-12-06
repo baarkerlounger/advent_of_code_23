@@ -1,7 +1,7 @@
 use itertools::Itertools;
+use rayon::prelude::*;
 use std::env;
 use std::fs;
-use rayon::prelude::*;
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -45,7 +45,7 @@ fn result(input: &str, part: Part) -> u64 {
 
     let map_groups: Vec<Vec<Map>> = input_groups
         .map(|group| {
-            let split_1: Vec<&str> = group.split(":").collect();
+            let split_1: Vec<&str> = group.split(':').collect();
             let num_lines = split_1[1].lines().filter(|l| !l.is_empty());
             let map_group: Vec<Map> = num_lines
                 .map(|l| {
@@ -76,7 +76,7 @@ fn result(input: &str, part: Part) -> u64 {
                 let mut local_min = u64::MAX;
                 let end = start + size;
                 for seed in start..end {
-                    local_min = min_location(seed, &map_groups, local_min).into();
+                    local_min = min_location(seed, &map_groups, local_min);
                 }
                 local_min
             });

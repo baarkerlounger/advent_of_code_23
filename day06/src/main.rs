@@ -28,7 +28,7 @@ fn result(input: &str, part: Part) -> u64 {
         Part::One => input
             .lines()
             .map(|l| {
-                l.split(":")
+                l.split(':')
                     .map(|s| s.trim())
                     .nth(1)
                     .unwrap()
@@ -41,11 +41,11 @@ fn result(input: &str, part: Part) -> u64 {
             .lines()
             .map(|l| {
                 Vec::from([l
-                    .split(":")
+                    .split(':')
                     .map(|s| s.trim())
                     .nth(1)
                     .unwrap()
-                    .replace(" ", "")
+                    .replace(' ', "")
                     .parse::<u64>()
                     .unwrap()])
             })
@@ -60,7 +60,7 @@ fn result(input: &str, part: Part) -> u64 {
         .enumerate()
         .map(|(idx, time)| {
             let dist = dists[idx];
-            (0 as u64..=*time)
+            (0_u64..=*time)
                 .map(|hold| ((hold * (time - hold)) > dist) as u64)
                 .sum::<u64>()
         })
