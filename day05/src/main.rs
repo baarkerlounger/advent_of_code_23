@@ -1,6 +1,7 @@
 use itertools::Itertools;
 use std::env;
 use std::fs;
+use rayon::prelude::*;
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -66,23 +67,25 @@ fn result(input: &str, part: Part) -> u64 {
         Part::One => {
             let seeds: Vec<u64> = seed_nums.collect();
             for seed in seeds {
-                location_min = min_location(seed, &map_groups, &mut location_min);
+                location_min = min_location(seed, &map_groups, location_min);
             }
             location_min
         }
         Part::Two => {
-            for (start, size) in seed_nums.tuples() {
+            let locations = seed_nums.tuples().par_bridge().map(|(start, size)| {
+                let mut local_min = u64::MAX;
                 let end = start + size;
                 for seed in start..end {
-                    location_min = min_location(seed, &map_groups, &mut location_min);
+                    local_min = min_location(seed, &map_groups, local_min).into();
                 }
-            }
-            location_min
+                local_min
+            });
+            locations.min().unwrap()
         }
     }
 }
 
-fn min_location(seed: u64, map_groups: &Vec<Vec<Map>>, min: &mut u64) -> u64 {
+fn min_location(seed: u64, map_groups: &Vec<Vec<Map>>, min: u64) -> u64 {
     let mut loc = seed;
     for map_group in map_groups {
         for map in map_group {
@@ -92,10 +95,11 @@ fn min_location(seed: u64, map_groups: &Vec<Vec<Map>>, min: &mut u64) -> u64 {
             }
         }
     }
-    if loc < *min {
-        *min = loc;
+    if loc < min {
+        loc
+    } else {
+        min
     }
-    *min
 }
 
 #[cfg(test)]

@@ -25,7 +25,7 @@ Generate project: `cargo make day {##}`
 | [Day 2](./day02/src/main.rs) | `1.4ms` | `1.0ms` ||
 | [Day 3](./day03/src/main.rs) | `2.5ms` | `2.0ms` ||
 | [Day 4](./day04/src/main.rs) | `1.7ms` | `2.0ms` ||
-| [Day 5](./day05/src/main.rs) | `0.8ms` | `158297ms` ||
+| [Day 5](./day05/src/main.rs) | `0.8ms` | `57259ms` |Rayon to brute force|
 
 <!--- benchmarking table --->
 

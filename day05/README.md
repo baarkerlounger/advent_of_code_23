@@ -7,10 +7,11 @@ Benchmark 1: target/release/day05 1
 ```
 
 ```bash
-$ hyperfine --runs 1  -N  "target/release/day05 2"
+$ hyperfine --warmup 50 --runs 100  -N  "target/release/day05 2"
 
 Benchmark 1: target/release/day05 2
-  Time (abs ≡):        158.297 s               [User: 158.287 s, System: 0.000 s]
+  Time (mean ± σ):     57.259 s ±  7.366 s    [User: 288.421 s, System: 0.112 s]
+  Range (min … max):   47.673 s … 71.041 s    100 runs
 ```
 
 --- Day 5: If You Give A Seed A Fertilizer ---
