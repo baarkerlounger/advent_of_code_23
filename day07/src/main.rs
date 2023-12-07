@@ -1,10 +1,8 @@
+use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::env;
 use std::fs;
-use std::collections::HashMap;
-use std::cmp::Ordering;
-use std::convert::From;
 use std::str::Chars;
-use phf::phf_map;
 
 fn main() {
     let file_contents = fs::read_to_string("data/input.txt").expect("Valid file");
@@ -23,6 +21,7 @@ fn main() {
     }
 }
 
+#[derive(PartialEq)]
 enum Part {
     One,
     Two,
@@ -52,24 +51,16 @@ struct Hand {
     high_cards: Vec<u32>,
 }
 
-static PICTURE_CARDS: phf::Map<char, u32> = phf_map! {
-    'A' => 14,
-    'K' => 13,
-    'Q' => 12,
-    'J' => 11,
-    'T' => 10,
-};
-
-impl From<Chars<'_>> for Hand {
-    fn from(chars: Chars) -> Self {
+impl Hand {
+    pub fn from_chars(chars: Chars, part: &Part, picture_cards: &HashMap<char, u32>) -> Self {
         let mut cards: HashMap<u32, u32> = HashMap::new();
         let mut high_cards: Vec<u32> = Vec::new();
-        let hand_type: HandType;
+        let mut hand_type: HandType;
         chars.for_each(|card| {
             let card_val = if card.is_ascii_digit() {
                 card.to_digit(10).unwrap()
             } else {
-                *PICTURE_CARDS.get(&card).unwrap()
+                *picture_cards.get(&card).unwrap()
             };
             high_cards.push(card_val);
 
@@ -79,6 +70,7 @@ impl From<Chars<'_>> for Hand {
                 cards.insert(card_val, 1);
             }
         });
+
         let mut v: Vec<(&u32, &u32)> = cards.iter().map(|(k, v)| (v, k)).collect();
         v.sort_by(|a, b| b.cmp(a));
         if v[0].0 == &5 {
@@ -96,8 +88,46 @@ impl From<Chars<'_>> for Hand {
         } else {
             hand_type = HandType::HighCard;
         }
-        // let high_cards: Vec<u32> = v.iter().map(|tup| *tup.1 ).collect();
-        Hand { cards, hand_type, high_cards }
+
+        if part == &Part::Two {
+            hand_type = Self::apply_jokers(hand_type, &cards);
+        }
+        Hand {
+            cards,
+            hand_type,
+            high_cards,
+        }
+    }
+
+    fn apply_jokers(hand_type: HandType, cards: &HashMap<u32, u32>) -> HandType {
+        let joker_count = cards.get(&1).unwrap_or(&0);
+        if joker_count > &3 {
+            HandType::FiveOfAKind
+        } else if joker_count == &3 {
+            match hand_type {
+                HandType::FullHouse => HandType::FiveOfAKind,
+                HandType::ThreeOfAKind => HandType::FourOfAKind,
+                _ => panic!(),
+            }
+        } else if joker_count == &2 {
+            match hand_type {
+                HandType::FullHouse => HandType::FiveOfAKind,
+                HandType::TwoPair => HandType::FourOfAKind,
+                HandType::OnePair => HandType::ThreeOfAKind,
+                _ => panic!(),
+            }
+        } else if joker_count == &1 {
+            match hand_type {
+                HandType::FourOfAKind => HandType::FiveOfAKind,
+                HandType::ThreeOfAKind => HandType::FourOfAKind,
+                HandType::TwoPair => HandType::FullHouse,
+                HandType::OnePair => HandType::ThreeOfAKind,
+                HandType::HighCard => HandType::OnePair,
+                _ => panic!(),
+            }
+        } else {
+            hand_type
+        }
     }
 }
 
@@ -107,16 +137,20 @@ impl Ord for Round {
             Ordering::Equal => {
                 let mut ord: Option<Ordering> = None;
                 for (idx, card) in self.hand.high_cards.iter().enumerate() {
-                    if card < &other.hand.high_cards[idx] {
-                        ord = Some(Ordering::Less);
-                        break;
-                    } else if card > &other.hand.high_cards[idx] {
-                        ord = Some(Ordering::Greater);
-                        break;
+                    match card.cmp(&other.hand.high_cards[idx]) {
+                        Ordering::Equal => {}
+                        Ordering::Less => {
+                            ord = Some(Ordering::Less);
+                            break;
+                        }
+                        Ordering::Greater => {
+                            ord = Some(Ordering::Greater);
+                            break;
+                        }
                     }
-                };
+                }
                 ord.unwrap()
-            },
+            }
             Ordering::Greater => Ordering::Greater,
             Ordering::Less => Ordering::Less,
         }
@@ -131,31 +165,26 @@ impl PartialOrd for Round {
 
 fn result(input: &str, part: Part) -> u32 {
     let lines = input.lines();
-    let mut rounds: Vec<Round> = lines.map(|l| {
-        let split: Vec<&str> = l.split_whitespace().collect();
-        let bid: u32 = split[1].parse().unwrap();
-        let hand = Hand::from(split[0].chars());
-        Round { hand, bid }
-    }).collect();
-
+    let j_val = match part {
+        Part::One => 11,
+        Part::Two => 1,
+    };
+    let picture_cards = HashMap::from([('A', 14), ('K', 13), ('Q', 12), ('J', j_val), ('T', 10)]);
+    let mut rounds: Vec<Round> = lines
+        .map(|l| {
+            let split: Vec<&str> = l.split_whitespace().collect();
+            let bid: u32 = split[1].parse().unwrap();
+            let hand = Hand::from_chars(split[0].chars(), &part, &picture_cards);
+            Round { hand, bid }
+        })
+        .collect();
     rounds.sort();
-
-    // println!("{:#?}", rounds);
-
-    let sum: u32 = rounds.iter().enumerate().map(|(idx, round)| {
-        (idx + 1) as u32 * round.bid
-    }).sum();
-
-    match part {
-        Part::One => {
-            sum
-        }
-        Part::Two => {
-            unimplemented!()
-        }
-    }
+    rounds
+        .iter()
+        .enumerate()
+        .map(|(idx, round)| (idx + 1) as u32 * round.bid)
+        .sum()
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -165,11 +194,17 @@ mod tests {
     fn test_part_1() {
         let file_contents = fs::read_to_string("data/demo_input.txt").expect("valid file");
         assert_eq!(result(&file_contents, Part::One), 6440);
+
+        let file_contents = fs::read_to_string("data/input.txt").expect("valid file");
+        assert_eq!(result(&file_contents, Part::One), 249390788);
     }
 
-    // #[test]
-    // fn test_part_2() {
-    //     let file_contents = fs::read_to_string("data/demo_input.txt").expect("valid file");
-    //     assert_eq!(result(&file_contents, Part::Two), 2);
-    // }
+    #[test]
+    fn test_part_2() {
+        let file_contents = fs::read_to_string("data/demo_input_2.txt").expect("valid file");
+        assert_eq!(result(&file_contents, Part::Two), 5905);
+
+        let file_contents = fs::read_to_string("data/input.txt").expect("valid file");
+        assert_eq!(result(&file_contents, Part::Two), 248750248);
+    }
 }

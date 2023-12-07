@@ -15,6 +15,7 @@ Generate project: `cargo make day {##}`
 | [Day 4](https://adventofcode.com/2023/day/4) | ⭐ | ⭐ |
 | [Day 5](https://adventofcode.com/2023/day/5) | ⭐ | ⭐ |
 | [Day 6](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ |
+| [Day 7](https://adventofcode.com/2023/day/7) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 <!--- benchmarking table --->
@@ -28,6 +29,7 @@ Generate project: `cargo make day {##}`
 | [Day 4](./day04/src/main.rs) | `1.2ms` | `1.2ms` ||
 | [Day 5](./day05/src/main.rs) | `0.8ms` | `57259ms` |Rayon to brute force|
 | [Day 6](./day06/src/main.rs) | `0.7ms` | `28.5ms` ||
+| [Day 7](./day07/src/main.rs) | `1.7ms` | `1.7ms` ||
 
 <!--- benchmarking table --->
 
