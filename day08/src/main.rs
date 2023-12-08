@@ -62,10 +62,8 @@ fn result(input: &str, part: Part) -> u64 {
         },
         Part::Two => {
             let locs: Vec<&String> = map.keys().filter(|k| k.ends_with('A')).collect();
-            let mut a_z_counts: Vec<u64> = Vec::new();
-            let mut z_z_counts: Vec<u64> = Vec::new();
+            let mut counts: Vec<u64> = Vec::new();
             for loc in locs {
-                let mut start = 'A';
                 let mut count = 0;
                 let mut current_loc = loc;
 
@@ -77,19 +75,13 @@ fn result(input: &str, part: Part) -> u64 {
                         _ => panic!()
                     };
                     count += 1;
-                    let reached_end = current_loc.ends_with('Z');
-                    if reached_end && start == 'A' {
-                        a_z_counts.push(count);
-                        count = 0;
-                        start = 'Z';
-                    } else if reached_end && start == 'Z' {
-                        z_z_counts.push(count);
+                    if current_loc.ends_with('Z') {
+                        counts.push(count);
                         break;
                     }
                 }
             }
-            let all_counts = { a_z_counts.append(&mut z_z_counts); a_z_counts };
-            all_counts.into_iter().reduce(lcm).unwrap()
+            counts.into_iter().reduce(lcm).unwrap()
         }
     }
 }

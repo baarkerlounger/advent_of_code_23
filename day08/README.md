@@ -10,8 +10,8 @@ Benchmark 1: target/release/day08 1
 $ hyperfine --warmup 50 --runs 100  -N  "target/release/day08 2"
 
 Benchmark 1: target/release/day08 2
-  Time (mean ± σ):       6.6 ms ±   0.5 ms    [User: 6.0 ms, System: 0.5 ms]
-  Range (min … max):     5.9 ms …   9.8 ms    100 runs
+  Time (mean ± σ):       4.4 ms ±   0.7 ms    [User: 3.5 ms, System: 0.7 ms]
+  Range (min … max):     3.3 ms …   6.4 ms    100 runs
 ```
 
 --- Day 8: Haunted Wasteland ---
